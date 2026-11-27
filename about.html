@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}About · Runoff Early Warning{% endblock %}
+{% block content %}
+<h1>About this project</h1>
+<p style="color:var(--muted)">AI-Assisted Early Warning System for Precision Fertilizer Management and Pesticide Runoff Mitigation</p>
+
+<h2>Progress so far</h2>
+<div class="grid">
+  <div class="card"><h3>✅ Prediction models</h3><p>Two Gradient Boosting models for nitrogen and pesticide runoff risk.</p></div>
+  <div class="card"><h3>✅ Fertilizer advice</h3><p>Crop demand versus soil supply, with split and delayed doses.</p></div>
+  <div class="card"><h3>✅ Early warning engine</h3><p>Low, Medium, High levels with actions.</p></div>
+  <div class="card"><h3>✅ Website and alerts</h3><p>Flask site, live dashboard, SMS and WhatsApp alerts via Twilio.</p></div>
+</div>
+
+<h2>Results</h2>
+<div class="card stats">
+  <div><b>≈0.82</b><span>R² nitrogen model</span></div>
+  <div><b>≈0.82</b><span>R² pesticide model</span></div>
+  <div><b>≈0.02</b><span>mean absolute error</span></div>
+</div>
+
+<h2>Limitation</h2>
+<div class="card warn"><p style="color:var(--text)">The data is synthetic, generated from agronomic and hydrological relationships. The accuracy shows the pipeline works, not real-world performance. Alerts run as a dry run unless Twilio credentials are set.</p></div>
+
+<h2>Next steps</h2>
+<div class="card"><ul style="margin:0;padding-left:20px"><li>Connect real weather forecasts (Open-Meteo or IMD)</li><li>Collect real soil and water-quality data to retrain and validate</li><li>Test on a real or published dataset</li><li>Add a map view for multiple fields</li></ul></div>
+
+<h2>Common questions</h2>
+<details><summary>Why synthetic data?</summary><p>Real labelled runoff data is scarce and expensive, so the pipeline was built first and will be validated with real data next.</p></details>
+<details><summary>Why Gradient Boosting?</summary><p>It handles non-linear relationships and mixed features well on tabular data and needs less data than deep learning.</p></details>
+<details><summary>Why call it AI-assisted and not just rules?</summary><p>The risk prediction is learned by the model. Rules only translate predicted risk into actions.</p></details>
+<details><summary>How would a farmer use it?</summary><p>Through the dashboard, or a WhatsApp alert before rain is forecast.</p></details>
+{% endblock %}

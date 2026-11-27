@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Runoff Early Warning{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head><body>
+<nav class="nav">
+  <a class="brand" href="{{ url_for('home') }}">🌾 RunoffWatch</a>
+  {% for ep, label in [('home','Home'),('dashboard','Dashboard'),('how','How it works'),('about','About')] %}
+  <a class="link {{ 'active' if request.endpoint == ep }}" href="{{ url_for(ep) }}">{{ label }}</a>
+  {% endfor %}
+</nav>
+<main>{% block content %}{% endblock %}</main>
+<footer>AI-Assisted Early Warning System for Precision Fertilizer Management and Pesticide Runoff Mitigation · Student project prototype</footer>
+{% block scripts %}{% endblock %}
+</body></html>

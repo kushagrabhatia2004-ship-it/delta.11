@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}How it works · Runoff Early Warning{% endblock %}
+{% block content %}
+<h1>How it works</h1>
+<div class="flow">
+  <div class="card">Field inputs</div><span class="arrow">→</span>
+  <div class="card">ML risk models</div><span class="arrow">→</span>
+  <div class="card">Warning engine</div><span class="arrow">→</span>
+  <div class="card">Advice + fertilizer plan</div><span class="arrow">→</span>
+  <div class="card">SMS / WhatsApp alert</div>
+</div>
+
+<h2>1. The inputs</h2>
+<div class="card"><p>The models use 12 factors that affect whether chemicals wash away:</p>
+<table style="margin-top:8px"><tr><th>Group</th><th>Inputs</th></tr>
+<tr><td>Soil</td><td>soil moisture, soil nitrogen, clay fraction</td></tr>
+<tr><td>Land</td><td>slope, buffer strip width, distance to water</td></tr>
+<tr><td>Weather</td><td>forecast rain for the next 24 h and 72 h</td></tr>
+<tr><td>Farm activity</td><td>days since fertilizer and pesticide, and the amounts used</td></tr></table></div>
+
+<h2>2. The prediction models</h2>
+<div class="card"><p>Two Gradient Boosting regression models, one for nitrogen and one for pesticide, each output a risk score from 0 to 1. Gradient Boosting builds many small decision trees, each correcting the mistakes of the last, which suits mixed, non-linear tabular data like this.</p></div>
+
+<h2>3. The warning engine</h2>
+<div class="card"><table><tr><th>Risk score</th><th>Level</th></tr>
+<tr><td>below 0.25</td><td class="LOW"><b>LOW</b></td></tr>
+<tr><td>0.25 to 0.50</td><td class="MEDIUM"><b>MEDIUM</b></td></tr>
+<tr><td>0.50 and above</td><td class="HIGH"><b>HIGH</b></td></tr></table>
+<p style="margin-top:8px">Each level maps to actions such as postponing fertilizer, avoiding spraying for 48 hours, or widening a buffer strip.</p></div>
+
+<h2>4. The fertilizer plan</h2>
+<div class="card"><p>Soil supply is estimated from soil nitrogen. The crop's nitrogen demand minus that supply gives the deficit, which is split into three doses. If heavy rain is forecast or risk is high, the dose is delayed or cut by 30%.</p>
+<table style="margin-top:8px"><tr><th>Crop</th><th>Nitrogen demand (kg/ha)</th></tr>
+{% for c, v in crops.items() %}<tr><td>{{ c|capitalize }}</td><td>{{ v }}</td></tr>{% endfor %}</table></div>
+
+<h2>5. The website</h2>
+<div class="card"><p>The dashboard sends your slider values to a Flask API. The server runs the trained models and returns the result as JSON, and the page updates instantly. The risk-vs-rainfall chart asks the same models for 16 rainfall values.</p></div>
+{% endblock %}

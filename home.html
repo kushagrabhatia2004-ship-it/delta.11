@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Warn farmers before rain washes<br>fertilizer and pesticide into water</h1>
+  <p>An AI-assisted early warning system. Enter the conditions of a field and get a runoff risk level, clear actions to take, and a smarter fertilizer plan.</p>
+  <p style="margin-top:16px"><a class="btn" href="{{ url_for('dashboard') }}">Open the dashboard</a>
+  &nbsp;<a class="btn ghost" href="{{ url_for('how') }}">How it works</a></p>
+</section>
+
+<h2>The problem</h2>
+<div class="card"><p style="color:var(--text)">When heavy rain follows fertilizer or pesticide application, the chemicals wash into rivers and ponds. This wastes money, pollutes water and harms ecosystems, and farmers rarely get a warning in time to act.</p></div>
+
+<h2>What the system does</h2>
+<div class="grid">
+  <div class="card"><h3><span class="num">1</span>Predicts risk</h3><p>Two machine learning models estimate nitrogen and pesticide runoff risk from 12 field conditions.</p></div>
+  <div class="card"><h3><span class="num">2</span>Gives advice</h3><p>Turns Low, Medium or High risk into plain actions, like "do not spray for 48 hours".</p></div>
+  <div class="card"><h3><span class="num">3</span>Plans fertilizer</h3><p>Compares what the crop needs with what the soil already has, then applies, reduces or delays.</p></div>
+  <div class="card"><h3><span class="num">4</span>Sends alerts</h3><p>Warnings can go to the farmer's phone by SMS or WhatsApp.</p></div>
+</div>
+
+<h2>Key numbers</h2>
+<div class="card stats">
+  <div><b>12</b><span>input factors</span></div>
+  <div><b>2</b><span>risk models</span></div>
+  <div><b>≈0.82</b><span>R² on test data</span></div>
+  <div><b>3</b><span>risk levels</span></div>
+</div>
+<p class="small" style="margin-top:8px">The R² value is measured on synthetic data, so it shows the pipeline works, not real-world accuracy.</p>
+{% endblock %}

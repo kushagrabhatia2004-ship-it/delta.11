@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Runoff Early Warning{% endblock %}
+{% block content %}
+<h1 style="font-size:1.6rem">Field dashboard</h1>
+<div class="dash">
+  <section class="card">
+    <h2 style="color:var(--accent)">Field inputs</h2>
+    <div class="presets">
+      <button class="btn small ghost" data-preset="safe">☀️ Safe day</button>
+      <button class="btn small ghost" data-preset="storm">⛈️ Storm warning</button>
+    </div>
+    <label>Crop</label>
+    <select id="crop">{% for c in crops %}<option value="{{ c }}">{{ c|capitalize }}</option>{% endfor %}</select>
+    <div id="inputs"></div>
+  </section>
+  <section>
+    <div class="card"><h2 style="color:var(--accent)">Risk assessment</h2>
+      <div class="meters">
+        <div class="meter"><div class="small">Nitrogen runoff</div><div class="lvl" id="nl">…</div><div class="bar"><i id="nb"></i></div></div>
+        <div class="meter"><div class="small">Pesticide runoff</div><div class="lvl" id="pl">…</div><div class="bar"><i id="pb"></i></div></div>
+      </div></div>
+    <div class="card"><h2 style="color:var(--accent)">Recommended actions</h2><ul class="acts" id="actions"></ul></div>
+    <div class="card"><h2 style="color:var(--accent)">Fertilizer plan</h2><div class="rec" id="rec"></div></div>
+    <div class="card"><h2 style="color:var(--accent)">Risk vs. rainfall (next 24 h)</h2>
+      <canvas id="chart"></canvas>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Nitrogen</span><span><i style="background:var(--med)"></i>Pesticide</span></div></div>
+    <div class="card"><h2 style="color:var(--accent)">📲 Send alert</h2>
+      <input type="text" id="phone" placeholder="+91XXXXXXXXXX">
+      <label style="justify-content:flex-start;gap:8px"><input type="checkbox" id="wa"> Send via WhatsApp</label>
+      <button class="btn" id="send" style="margin-top:10px">Send alert</button><p class="small" id="alertmsg"></p></div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='dashboard.js') }}"></script>{% endblock %}
